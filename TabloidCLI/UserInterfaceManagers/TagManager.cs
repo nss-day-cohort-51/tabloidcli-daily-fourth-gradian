@@ -1,14 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
+using TabloidCLI.Models;
+using TabloidCLI.Repositories;
 
 namespace TabloidCLI.UserInterfaceManagers
 {
     public class TagManager : IUserInterfaceManager
     {
         private readonly IUserInterfaceManager _parentUI;
+        private TagRepository _tagRepository;
 
         public TagManager(IUserInterfaceManager parentUI, string connectionString)
         {
             _parentUI = parentUI;
+            _tagRepository = new TagRepository(connectionString);
         }
 
         public IUserInterfaceManager Execute()
@@ -46,7 +51,14 @@ namespace TabloidCLI.UserInterfaceManagers
 
         private void List()
         {
-            throw new NotImplementedException();
+
+            List<Tag> Tags = _tagRepository.GetAll();
+
+            foreach(Tag t in Tags)
+            {
+                Console.WriteLine(t);
+            }
+            
         }
 
         private void Add()
