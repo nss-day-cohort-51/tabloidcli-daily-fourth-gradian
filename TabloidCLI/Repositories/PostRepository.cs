@@ -89,7 +89,33 @@ namespace TabloidCLI.Repositories
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            using (SqlConnection conn = Connection)
+            {
+
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+
+                    // What do you think this code will do if there is a roommate in the room we're deleting???
+                    cmd.CommandText = "DELETE FROM Journal WHERE Id = @id";
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+
+                    }
+                    catch (SqlException ex)
+                    {
+
+
+                        Console.WriteLine("This Room is occupied and cannot be deleted");
+                        Console.WriteLine("Press any key to continue");
+                        Console.ReadKey();
+                    }
+
+                }
+            }
         }
     }
 }
