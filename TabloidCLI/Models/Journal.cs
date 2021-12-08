@@ -8,8 +8,7 @@ namespace TabloidCLI.Models
         public int Id { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
-        public string Bio { get; set; }
-        public DateTime CreateDateTime{ get;}
+        public DateTime CreateDateTime{ get; set; }
 
         public Journal()
         {
