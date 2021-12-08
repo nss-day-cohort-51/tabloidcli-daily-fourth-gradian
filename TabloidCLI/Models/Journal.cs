@@ -15,10 +15,9 @@ namespace TabloidCLI.Models
             CreateDateTime = DateTime.Now;
         }
 
-
-        //public override string ToString()
-        //{
-        //    return FullName;
-        //}
+        public override string ToString()
+        {
+            return Title;
+        }
     }
 }
