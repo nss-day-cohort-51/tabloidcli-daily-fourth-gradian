@@ -18,9 +18,9 @@ namespace TabloidCLI.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"SELECT id,
-                                               FirstName,
-                                               LastName,
-                                               Bio
+                                               Title,
+                                               Content,
+                                               CreateDateTime
                                           FROM Journal";
 
                     List<Journal> journals = new List<Journal>();
@@ -30,6 +30,10 @@ namespace TabloidCLI.Repositories
                     {
                         Journal journal = new Journal()
                         {
+                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            Title = reader.GetString(reader.GetOrdinal("Title")),
+                            Content = reader.GetString(reader.GetOrdinal("Content")),
+                            CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime")),
                         };
                         journals.Add(journal);
                     }
@@ -48,16 +52,12 @@ namespace TabloidCLI.Repositories
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"SELECT a.Id AS JournalId,
-                                               a.FirstName,
-                                               a.LastName,
-                                               a.Bio,
-                                               t.Id AS TagId,
-                                               t.Name
-                                          FROM Journal a 
-                                               LEFT JOIN JournalTag at on a.Id = at.JournalId
-                                               LEFT JOIN Tag t on t.Id = at.TagId
-                                         WHERE a.id = @id";
+                    cmd.CommandText = @"SELECT Id,
+                                               Title,
+                                               Content,
+                                               CreateDateTime
+                                          FROM Journal 
+                                         WHERE Id = @id";
 
                     cmd.Parameters.AddWithValue("@id", id);
 
@@ -70,9 +70,12 @@ namespace TabloidCLI.Repositories
                         {
                             journal = new Journal()
                             {
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                Title = reader.GetString(reader.GetOrdinal("Title")),
+                                Content = reader.GetString(reader.GetOrdinal("Content")),
+                                CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime")),
                             };
                         }
-
                     }
 
                     reader.Close();
