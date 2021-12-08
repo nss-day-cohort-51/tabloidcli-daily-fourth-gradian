@@ -122,35 +122,26 @@ namespace TabloidCLI.UserInterfaceManagers
 
         private void Edit()
         {
-            // TODO
+           Blog blogToEdit = Choose("Which blog would you like to edit?");
+            if (blogToEdit == null)
+            {
+                return;
+            }
 
-            //Blog blogToEdit = Choose("Which blog would you like to edit?");
-            //if (blogToEdit == null)
-            //{
-            //    return;
-            //}
-
-            //Console.WriteLine();
-            //Console.Write("New first name (blank to leave unchanged: ");
-            //string firstName = Console.ReadLine();
-            //if (!string.IsNullOrWhiteSpace(firstName))
-            //{
-            //    blogToEdit.FirstName = firstName;
-            //}
-            //Console.Write("New last name (blank to leave unchanged: ");
-            //string lastName = Console.ReadLine();
-            //if (!string.IsNullOrWhiteSpace(lastName))
-            //{
-            //    blogToEdit.LastName = lastName;
-            //}
-            //Console.Write("New bio (blank to leave unchanged: ");
-            //string bio = Console.ReadLine();
-            //if (!string.IsNullOrWhiteSpace(bio))
-            //{
-            //    blogToEdit.Bio = bio;
-            //}
-
-            //_blogRepository.Update(blogToEdit);
+            Console.WriteLine();
+            Console.Write("Enter a new Title (blank to leave unchanged): ");
+            string title = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(title))
+            {
+                blogToEdit.Title = title;
+            }
+            Console.Write("Enter a new URL (blank to leave unchanged: ");
+            string url = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(url))
+            {
+                blogToEdit.Url = url;
+            }
+            _blogRepository.Update(blogToEdit);
         }
 
         private void Remove()
