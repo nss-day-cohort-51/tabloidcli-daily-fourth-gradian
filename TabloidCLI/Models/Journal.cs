@@ -14,11 +14,10 @@ namespace TabloidCLI.Models
         {
             CreateDateTime = DateTime.Now;
         }
+        public override string ToString()
+        {
+            return Title;
+        }
 
-
-        //public override string ToString()
-        //{
-        //    return FullName;
-        //}
     }
 }
