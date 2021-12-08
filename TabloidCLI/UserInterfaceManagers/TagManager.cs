@@ -1,6 +1,7 @@
 ﻿using System;
-using TabloidCLI.Models;
 using System.Collections.Generic;
+using TabloidCLI.Models;
+using TabloidCLI.Repositories;
 
 namespace TabloidCLI.UserInterfaceManagers
 {
@@ -79,14 +80,27 @@ namespace TabloidCLI.UserInterfaceManagers
 
         private void List()
         {
-            throw new NotImplementedException();
+
+            List<Tag> Tags = _tagRepository.GetAll();
+
+            foreach (Tag t in Tags)
+            {
+                Console.WriteLine(t);
+            }
+
         }
 
         private void Add()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("New Tag");
+            Tag tag = new Tag();
+
+            Console.Write("Enter a Tag Name: ");
+            tag.Name = Console.ReadLine();
+
+            _tagRepository.Insert(tag);
         }
-      
+
 
         private void Edit()
         {
@@ -103,7 +117,7 @@ namespace TabloidCLI.UserInterfaceManagers
             {
                 tagToEdit.Name = name;
             }
-          
+
             _tagRepository.Update(tagToEdit);
         }
 
