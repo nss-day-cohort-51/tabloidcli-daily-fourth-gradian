@@ -28,7 +28,7 @@ namespace TabloidCLI.UserInterfaceManagers
             switch (choice)
             {
                 case "1":
-                    //searchBlogs();
+                    SearchBlogs();
                     return this;
                 case "2":
                     SearchAuthors();
@@ -61,7 +61,6 @@ namespace TabloidCLI.UserInterfaceManagers
                 results.Display();
             }
         }
-
         private void SearchBlogs()
         {
             Console.Write("Tag> ");
@@ -77,7 +76,7 @@ namespace TabloidCLI.UserInterfaceManagers
             {
                 results.Display();
             }
-        }
 
+        }
     }
 }
