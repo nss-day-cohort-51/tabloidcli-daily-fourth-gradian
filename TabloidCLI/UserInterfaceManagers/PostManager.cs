@@ -10,7 +10,7 @@ namespace TabloidCLI.UserInterfaceManagers
         private readonly IUserInterfaceManager _parentUI;
         private PostRepository _postRepository;
         private AuthorRepository _authorRepository;
-        private BlogRepository _blogRepository;
+        //private PostRepository _postRepository;
         private string _connectionString;
 
         public PostManager(IUserInterfaceManager parentUI, string connectionString)
@@ -18,7 +18,7 @@ namespace TabloidCLI.UserInterfaceManagers
             _parentUI = parentUI;
             _postRepository = new PostRepository(connectionString);
             _authorRepository = new AuthorRepository(connectionString);
-            _blogRepository = new BlogRepository(connectionString);
+            _postRepository = new PostRepository(connectionString);
             _connectionString = connectionString;
         }
 
@@ -40,15 +40,16 @@ namespace TabloidCLI.UserInterfaceManagers
                     List();
                     return this;
                 case "2":
-                    //Post post = Choose();
-                    //if (post == null)
-                    //{
-                    //    return this;
-                    //}
-                    //else
-                    //{
-                    //    return new PostDetailManager(this, _connectionString, post.Id);
-                    //}
+
+                    Post post = Choose();
+                    if (post == null)
+                    {
+                        return this;
+                    }
+                    else
+                    {
+                        return new PostDetailManager(this, _connectionString, post.Id);
+                    }
                 case "3":
                     Add();
                     return this;
@@ -134,21 +135,21 @@ namespace TabloidCLI.UserInterfaceManagers
                 return defaultAuthor;
             }
         }
-        private Blog ChooseBlog(string prompt = null, Blog defaultBlog = null)
+        private Post ChoosePost(string prompt = null, Post defaultPost = null)
         {
             if (prompt == null)
             {
-                prompt = "Please choose a Blog:";
+                prompt = "Please choose a Post:";
             }
 
             Console.WriteLine(prompt);
 
-            List<Blog> blogs = _blogRepository.GetAll();
+            List<Post> posts = _postRepository.GetAll();
 
-            for (int i = 0; i < blogs.Count; i++)
+            for (int i = 0; i < posts.Count; i++)
             {
-                Blog blog = blogs[i];
-                Console.WriteLine($" {i + 1}) {blog.Title}");
+                Post post = posts[i];
+                Console.WriteLine($" {i + 1}) {post.Title}");
             }
             Console.Write("> ");
 
@@ -156,11 +157,11 @@ namespace TabloidCLI.UserInterfaceManagers
             try
             {
                 int choice = int.Parse(input);
-                return blogs[choice - 1];
+                return posts[choice - 1];
             }
             catch (Exception ex)
             {
-                return defaultBlog;
+                return defaultPost;
             }
         }
 
@@ -177,7 +178,7 @@ namespace TabloidCLI.UserInterfaceManagers
 
             post.Author = ChooseAuthor("Author:");
 
-            post.Blog = ChooseBlog("Blog:");
+            post = ChoosePost("Post:");
 
             post.PublishDateTime = DateTime.Now;
 
@@ -209,10 +210,14 @@ namespace TabloidCLI.UserInterfaceManagers
 
             postToEdit.Author = ChooseAuthor("New Author (blank to leave unchanged: ", postToEdit.Author);
 
-            postToEdit.Blog = ChooseBlog("New Blog (blank to leave unchanged: ", postToEdit.Blog);
+            postToEdit = ChoosePost("New Post (blank to leave unchanged: ", postToEdit);
 
             _postRepository.Update(postToEdit);
         }
+
+
+
+       
 
         private void Remove()
         {
