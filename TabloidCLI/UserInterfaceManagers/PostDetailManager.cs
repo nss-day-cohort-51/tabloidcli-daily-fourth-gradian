@@ -63,26 +63,37 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine($"Title: {post.Title}");
             Console.WriteLine($"URL: {post.Url}");
             Console.WriteLine($"published Date: {post.PublishDateTime}");
-            foreach (Tag tag in post.Tags)
+            //foreach (Tag tag in author.Tags)
+            //{
+            //    Console.WriteLine(" " + tag);
+            //}
+
+
+            List<Tag> tags = _postRepository.GetbyPostTag(_postId);
+            foreach (Tag tag in tags)
             {
-                Console.WriteLine(" " + tag);
+                Console.WriteLine("Tags::", tag.Name);
+
             }
+            Console.WriteLine();
+
             Console.WriteLine();
         }
 
-        private void ViewBlogPosts()
-        {
-            //List<Post> posts = _postRepository.GetByAuthor(_postId);
-            //foreach (Post post in posts)
-            //{
-            //    Console.WriteLine(post);
-            //}
-            //Console.WriteLine();
-        }
+        //private void ViewPostTag()
+        //{
+        //    List<Tag> tags = _postRepository.GetbyPostTag(_postId);
+        //    foreach (Tag tag in tags)
+        //    {
+        //        Console.WriteLine(tag);
+        //        Console.WriteLine(tag);
+        //    }
+        //    Console.WriteLine();
+        //}
 
         private void AddTag()
         {
-            Post post= _postRepository.Get(_postId);
+            Post post = _postRepository.Get(_postId);
 
             Console.WriteLine($"Which tag would you like to add to {post.Title}?");
             List<Tag> tags = _tagRepository.GetAll();
