@@ -74,8 +74,8 @@ namespace TabloidCLI.Repositories
                             {
                                 Id = reader.GetInt32(reader.GetOrdinal("Id")),
                                 Title = reader.GetString(reader.GetOrdinal("Title")),
-                                Tags = new List<Tag>(),
                                 Url = reader.GetString(reader.GetOrdinal("Url")),
+                                Tags = new List<Tag>(),
                             };
                         }
 
@@ -108,7 +108,7 @@ namespace TabloidCLI.Repositories
                                                      VALUES (@Title, @Url)";
                     cmd.Parameters.AddWithValue("@Title", blog.Title);
                     cmd.Parameters.AddWithValue("@Url", blog.Url);
-                    
+
 
                     cmd.ExecuteNonQuery();
                 }
@@ -130,7 +130,7 @@ namespace TabloidCLI.Repositories
                     cmd.Parameters.AddWithValue("@Title", blog.Title);
                     cmd.Parameters.AddWithValue("@url", blog.Url);
                     cmd.Parameters.AddWithValue("@id", blog.Id);
-                   
+
 
                     cmd.ExecuteNonQuery();
                 }
