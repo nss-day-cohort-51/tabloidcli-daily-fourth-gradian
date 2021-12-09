@@ -44,9 +44,7 @@ namespace TabloidCLI.UserInterfaceManagers
                     }
                     else
                     {
-                        // TODO create..
-                        //return new BlogDetailManager(this, _connectionString, blog.Id);
-                        return this;
+                        return new BlogDetailManager(this, _connectionString, blog.Id);
                     }
                 case "3":
                     Add();

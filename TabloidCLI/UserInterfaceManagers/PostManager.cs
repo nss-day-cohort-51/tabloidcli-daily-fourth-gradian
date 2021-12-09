@@ -106,6 +106,7 @@ namespace TabloidCLI.UserInterfaceManagers
                 return null;
             }
         }
+
         private Author ChooseAuthor(string prompt = null, Author defaultAuthor = null)
         {
             if (prompt == null)
@@ -217,7 +218,7 @@ namespace TabloidCLI.UserInterfaceManagers
 
 
 
-       
+
 
         private void Remove()
         {
