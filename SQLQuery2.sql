@@ -1,1 +1,1 @@
-﻿select * from Tag
+﻿select * from TabloidCLI
