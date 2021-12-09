@@ -40,7 +40,7 @@ namespace TabloidCLI.UserInterfaceManagers
                     View();
                     return this;
                 case "2":
-                    ViewBlogPosts();
+                    AddTag();
                     return this;
                 case "3":
                     AddTag();
@@ -66,18 +66,29 @@ namespace TabloidCLI.UserInterfaceManagers
             //{
             //    Console.WriteLine(" " + tag);
             //}
+
+
+            List<Tag> tags = _postRepository.GetbyPostTag(_postId);
+            foreach (Tag tag in tags)
+            {
+                Console.WriteLine("Tags::",tag.Name);
+                
+            }
+            Console.WriteLine();
+
             Console.WriteLine();
         }
 
-        private void ViewBlogPosts()
-        {
-            //List<Post> posts = _postRepository.GetByAuthor(_postId);
-            //foreach (Post post in posts)
-            //{
-            //    Console.WriteLine(post);
-            //}
-            //Console.WriteLine();
-        }
+        //private void ViewPostTag()
+        //{
+        //    List<Tag> tags = _postRepository.GetbyPostTag(_postId);
+        //    foreach (Tag tag in tags)
+        //    {
+        //        Console.WriteLine(tag);
+        //        Console.WriteLine(tag);
+        //    }
+        //    Console.WriteLine();
+        //}
 
         private void AddTag()
         {
