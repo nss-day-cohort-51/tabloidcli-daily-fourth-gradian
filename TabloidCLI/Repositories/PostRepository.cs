@@ -307,7 +307,7 @@ namespace TabloidCLI.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"INSERT INTO PostTag (PostId, TagId)
-                                                       VALUES (@blogId, @tagId)";
+                                                       VALUES (@postId, @tagId)";
                     cmd.Parameters.AddWithValue("@postId", post.Id);
                     cmd.Parameters.AddWithValue("@tagId", tag.Id);
                     cmd.ExecuteNonQuery();
