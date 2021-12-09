@@ -108,7 +108,7 @@ namespace TabloidCLI.Repositories
                                                      VALUES (@Title, @Url)";
                     cmd.Parameters.AddWithValue("@Title", blog.Title);
                     cmd.Parameters.AddWithValue("@Url", blog.Url);
-                    
+
 
                     cmd.ExecuteNonQuery();
                 }
@@ -130,7 +130,7 @@ namespace TabloidCLI.Repositories
                     cmd.Parameters.AddWithValue("@Title", blog.Title);
                     cmd.Parameters.AddWithValue("@url", blog.Url);
                     cmd.Parameters.AddWithValue("@id", blog.Id);
-                   
+
 
                     cmd.ExecuteNonQuery();
                 }
