@@ -1,1 +1,1 @@
-﻿select * from Blog
+﻿select * from TabloidCLI
