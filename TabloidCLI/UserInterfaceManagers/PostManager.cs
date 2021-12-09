@@ -17,6 +17,8 @@ namespace TabloidCLI.UserInterfaceManagers
         {
             _parentUI = parentUI;
             _postRepository = new PostRepository(connectionString);
+            _authorRepository = new AuthorRepository(connectionString);
+            _blogRepository = new BlogRepository(connectionString);
             _connectionString = connectionString;
         }
 
@@ -103,7 +105,7 @@ namespace TabloidCLI.UserInterfaceManagers
                 return null;
             }
         }
-        private Author ChooseAuthor(string prompt = null)
+        private Author ChooseAuthor(string prompt = null, Author defaultAuthor = null)
         {
             if (prompt == null)
             {
@@ -129,11 +131,10 @@ namespace TabloidCLI.UserInterfaceManagers
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Invalid Selection");
-                return null;
+                return defaultAuthor;
             }
         }
-        private Blog ChooseBlog(string prompt = null)
+        private Blog ChooseBlog(string prompt = null, Blog defaultBlog = null)
         {
             if (prompt == null)
             {
@@ -159,8 +160,7 @@ namespace TabloidCLI.UserInterfaceManagers
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Invalid Selection");
-                return null;
+                return defaultBlog;
             }
         }
 
@@ -175,23 +175,11 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.Write("Url: ");
             post.Url = Console.ReadLine();
 
-            List<Author> authorList = _authorRepository.GetAll();
-            for (var i = 0; i < authorList.Count; i++)
-            {
-                Console.WriteLine($" {i}) {authorList[i].FirstName} {authorList[i].FirstName}");
-            }
-            Console.Write("Post Author> ");
-            int authorChoice = int.Parse(Console.ReadLine());
-            post.Author = authorList[authorChoice];
+            post.Author = ChooseAuthor("Author:");
 
-            List<Blog> blogList = _blogRepository.GetAll();
-            for (var i = 0; i < blogList.Count; i++)
-            {
-                Console.WriteLine($" {i}) {blogList[i].Title}");
-            }
-            Console.Write("Post Author> ");
-            int blogChoice = int.Parse(Console.ReadLine());
-            post.Blog = blogList[authorChoice];
+            post.Blog = ChooseBlog("Blog:");
+
+            post.PublishDateTime = DateTime.Now;
 
             _postRepository.Insert(post);
         }
@@ -205,18 +193,23 @@ namespace TabloidCLI.UserInterfaceManagers
             }
 
             Console.WriteLine();
-            Console.Write("New first name (blank to leave unchanged: ");
+            Console.Write("New Title (blank to leave unchanged: ");
             string title = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(title))
             {
                 postToEdit.Title = title;
             }
-            Console.Write("New last name (blank to leave unchanged: ");
+
+            Console.Write("New Url (blank to leave unchanged: ");
             string url = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(url))
             {
                 postToEdit.Url = url;
             }
+
+            postToEdit.Author = ChooseAuthor("New Author (blank to leave unchanged: ", postToEdit.Author);
+
+            postToEdit.Blog = ChooseBlog("New Blog (blank to leave unchanged: ", postToEdit.Blog);
 
             _postRepository.Update(postToEdit);
         }
