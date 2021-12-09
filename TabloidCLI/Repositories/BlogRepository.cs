@@ -54,7 +54,7 @@ namespace TabloidCLI.Repositories
                     cmd.CommandText = @"SELECT b.Id,
                                                b.Title,
                                                b.Url,
-                                               t.Id as TagId
+                                               t.Id as TagId,
                                                t.Name
                                           FROM Blog b
                                                LEFT JOIN BlogTag bt ON b.Id = bt.BlogId
@@ -74,8 +74,8 @@ namespace TabloidCLI.Repositories
                             {
                                 Id = reader.GetInt32(reader.GetOrdinal("Id")),
                                 Title = reader.GetString(reader.GetOrdinal("Title")),
+                                Url = reader.GetString(reader.GetOrdinal("Url")),
                                 Tags = new List<Tag>(),
-                                Url = reader.GetString(reader.GetOrdinal("CreateDateTime")),
                             };
                         }
 
