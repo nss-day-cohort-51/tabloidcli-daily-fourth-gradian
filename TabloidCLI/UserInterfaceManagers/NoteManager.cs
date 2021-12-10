@@ -54,47 +54,47 @@ namespace TabloidCLI.UserInterfaceManagers
 
         private void List()
         {
-            //List<Author> authors = _authorRepository.GetAll();
-            //foreach (Author author in authors)
-            //{
-            //    Console.WriteLine(author);
-            //}
+            List<Note> notes = _noteRepository.GetAll();
+            foreach (Note note in notes)
+            {
+                Console.WriteLine(note);
+            }
         }
 
-        //private Author Choose(string prompt = null)
-        //{
-        //    if (prompt == null)
-        //    {
-        //        prompt = "Please choose an Author:";
-        //    }
+        private Note Choose(string prompt = null)
+        {
+            if (prompt == null)
+            {
+                prompt = "Please choose an Note:";
+            }
 
-        //    Console.WriteLine(prompt);
+            Console.WriteLine(prompt);
 
-        //    List<Author> authors = _authorRepository.GetAll();
+            List<Note> notes = _noteRepository.GetAll();
 
-        //    for (int i = 0; i < authors.Count; i++)
-        //    {
-        //        Author author = authors[i];
-        //        Console.WriteLine($" {i + 1}) {author.FullName}");
-        //    }
-        //    Console.Write("> ");
+            for (int i = 0; i < notes.Count; i++)
+            {
+                Note note = notes[i];
+                Console.WriteLine($" {i + 1}) {note.Title}");
+            }
+            Console.Write("> ");
 
-        //    string input = Console.ReadLine();
-        //    try
-        //    {
-        //        int choice = int.Parse(input);
-        //        return authors[choice - 1];
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine("Invalid Selection");
-        //        return null;
-        //    }
-        //}
+            string input = Console.ReadLine();
+            try
+            {
+                int choice = int.Parse(input);
+                return notes[choice - 1];
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Invalid Selection");
+                return null;
+            }
+        }
 
         private void Add()
         {
-            //Console.WriteLine("New Author");
+            //Console.WriteLine("New Note");
             //Author author = new Author();
 
             //Console.Write("First Name: ");
@@ -113,11 +113,11 @@ namespace TabloidCLI.UserInterfaceManagers
 
         private void Remove()
         {
-            //Note noteToDelete = Choose("Which Note would you like to remove?");
-            //if (noteToDelete != null)
-            //{
-            //    _noteRepository.Delete(noteToDelete.Id);
-            //}
+            Note noteToDelete = Choose("Which Note would you like to remove?");
+            if (noteToDelete != null)
+            {
+                _noteRepository.Delete(noteToDelete.Id);
+            }
         }
     }
 }

@@ -6,11 +6,11 @@ using TabloidCLI.Repositories;
 
 namespace TabloidCLI.Repositories
 {
-    public class NoteRepository : DatabaseConnector, IRepository<Blog>
+    public class NoteRepository : DatabaseConnector, IRepository<Note>
     {
         public NoteRepository(string connectionString) : base(connectionString) { }
 
-        public List<Blog> GetAll()
+        public List<Note> GetAll()
         {
             using (SqlConnection conn = Connection)
             {
@@ -19,32 +19,33 @@ namespace TabloidCLI.Repositories
                 {
                     cmd.CommandText = @"SELECT id,
                                                Title,
-                                                URL
-                                          FROM Blog";
+                                                Content,
+                                                CreateDatetime
+                                          FROM Note";
 
-                    List<Blog> blogs = new List<Blog>();
+                    List<Note> notes = new List<Note>();
 
                     SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        Blog blog = new Blog()
+                        Note note = new Note()
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                            Url = reader.GetString(reader.GetOrdinal("Title")),
                             Title = reader.GetString(reader.GetOrdinal("Title")),
-                            Tags = new List<Tag>(),
+                            Content = reader.GetString(reader.GetOrdinal("Title")),
+                            CreationDate = reader.GetInt32(reader.GetOrdinal("CreateDatetime")),
                         };
-                        blogs.Add(blog);
+                        notes.Add(note);
                     }
 
                     reader.Close();
 
-                    return blogs;
+                    return notes;
                 }
             }
         }
 
-        public Blog Get(int id)
+        public Note Get(int id)
         {
             using (SqlConnection conn = Connection)
             {
@@ -63,48 +64,48 @@ namespace TabloidCLI.Repositories
 
                     cmd.Parameters.AddWithValue("@id", id);
 
-                    Blog blog = null;
+                    Note note = null;
 
                     SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        if (blog == null)
+                        if (note == null)
                         {
-                            blog = new Blog()
+                            note = new Note()
                             {
                                 Id = reader.GetInt32(reader.GetOrdinal("Id")),
                                 Title = reader.GetString(reader.GetOrdinal("Title")),
-                                Url = reader.GetString(reader.GetOrdinal("Url")),
-                                Tags = new List<Tag>(),
+                                Content = reader.GetString(reader.GetOrdinal("Content")),
+                                CreationDate = reader.GetInt32(reader.GetOrdinal("CreateDateTime")),
                             };
                         }
 
                         if (!reader.IsDBNull(reader.GetOrdinal("TagId")))
                         {
-                            blog.Tags.Add(new Tag()
-                            {
-                                Id = reader.GetInt32(reader.GetOrdinal("TagId")),
-                                Name = reader.GetString(reader.GetOrdinal("Name")),
-                            });
+                            //note.Add(new Note()
+                            //{
+                            //    Id = reader.GetInt32(reader.GetOrdinal("TagId")),
+                            //    Name = reader.GetString(reader.GetOrdinal("Name")),
+                            //});
                         }
 
                     }
 
                     reader.Close();
 
-                    return blog;
+                    return note;
                 }
             }
         }
 
-        public void Insert(Blog blog)
+        public void Insert(Note blog)
         {
             //using (SqlConnection conn = Connection)
             //{
             //    conn.Open();
             //    using (SqlCommand cmd = conn.CreateCommand())
             //    {
-            //        cmd.CommandText = @"INSERT INTO Blog (Title, Url )
+            //        cmd.CommandText = @"INSERT INTO Note (Title, Url )
             //                                         VALUES (@Title, @Url)";
             //        cmd.Parameters.AddWithValue("@Title", blog.Title);
             //        cmd.Parameters.AddWithValue("@Url", blog.Url);
@@ -115,7 +116,7 @@ namespace TabloidCLI.Repositories
             //}
         }
 
-        public void Update(Blog blog)
+        public void Update(Note blog)
         {
             //using (SqlConnection conn = Connection)
             //{
@@ -139,17 +140,17 @@ namespace TabloidCLI.Repositories
 
         public void Delete(int id)
         {
-            //using (SqlConnection conn = Connection)
-            //{
-            //    conn.Open();
-            //    using (SqlCommand cmd = conn.CreateCommand())
-            //    {
-            //        cmd.CommandText = @"DELETE FROM Note WHERE id = @id";
-            //        cmd.Parameters.AddWithValue("@id", id);
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"DELETE FROM Note WHERE id = @id";
+                    cmd.Parameters.AddWithValue("@id", id);
 
-            //        cmd.ExecuteNonQuery();
-            //    }
-            //}
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
 
         public void InsertTag(Blog blog, Tag tag)
