@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using TabloidCLI.Models;
 using TabloidCLI.Repositories;
@@ -9,7 +9,7 @@ namespace TabloidCLI.UserInterfaceManagers
 
     public class NoteManager : IUserInterfaceManager
     {
-       
+
 
         private readonly IUserInterfaceManager _parentUI;
         private AuthorRepository _authorRepository;
@@ -109,7 +109,7 @@ namespace TabloidCLI.UserInterfaceManagers
             //_authorRepository.Insert(author);
         }
 
-       
+
 
         private void Remove()
         {
