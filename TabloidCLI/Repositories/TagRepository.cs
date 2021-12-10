@@ -64,7 +64,7 @@ namespace TabloidCLI
                             {
                                 Id = reader.GetInt32(reader.GetOrdinal("Id")),
                                 Name = reader.GetString(reader.GetOrdinal("Name")),
-                              
+
                             };
                         }
                     }
@@ -104,7 +104,7 @@ namespace TabloidCLI
                                            WHERE id = @id";
 
                     cmd.Parameters.AddWithValue("@name", tag.Name);
-                    cmd.Parameters.AddWithValue("@id",tag.Id);
+                    cmd.Parameters.AddWithValue("@id", tag.Id);
 
                     cmd.ExecuteNonQuery();
                 }
@@ -119,14 +119,15 @@ namespace TabloidCLI
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"DELETE FROM Tag 
-                                         WHERE Id = @id";                                              
+                                         WHERE Id = @id";
                     cmd.Parameters.AddWithValue("@id", id);
-                   
+
 
                     cmd.ExecuteNonQuery();
                 }
             }
         }
+
 
         public SearchResults<Author> SearchAuthors(string tagName)
         {
@@ -164,7 +165,7 @@ namespace TabloidCLI
                     return results;
                 }
             }
-           
+
         }
         public SearchResults<Blog> SearchBlogs(string tagName)
         {
@@ -191,7 +192,7 @@ namespace TabloidCLI
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
                             Title = reader.GetString(reader.GetOrdinal("Title")),
                             Url = reader.GetString(reader.GetOrdinal("Url")),
-                            
+
                         };
                         results.Add(blog);
                     }
@@ -229,7 +230,7 @@ namespace TabloidCLI
                             Title = reader.GetString(reader.GetOrdinal("Title")),
                             Url = reader.GetString(reader.GetOrdinal("Url")),
                             PublishDateTime = reader.GetDateTime(reader.GetOrdinal("PublishDateTime")),
-                          
+
 
                         };
                         results.Add(post);
