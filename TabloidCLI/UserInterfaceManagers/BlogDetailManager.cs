@@ -43,10 +43,10 @@ namespace TabloidCLI.UserInterfaceManagers
                     ViewBlogPosts();
                     return this;
                 case "3":
-                    //AddTag();
+                    AddTag();
                     return this;
                 case "4":
-                    //RemoveTag();
+                    RemoveTag();
                     return this;
                 case "0":
                     return _parentUI;
