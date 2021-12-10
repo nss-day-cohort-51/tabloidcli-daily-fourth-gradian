@@ -213,10 +213,12 @@ namespace TabloidCLI
                     cmd.CommandText = @"SELECT p.id,
                                                p.Title,
                                                p.Url,
-                                               p.PublishDateTime                            
+                                               p.PublishDateTime,     
+                                               a.FirstName as 'AuthorName'
                                           FROM Post p
                                                LEFT JOIN PostTag pt on p.Id = pt.PostId
                                                LEFT JOIN Tag t on t.Id = pt.TagId
+                                               JOIN Author a on a.Id = p.AuthorId
                                          WHERE t.Name LIKE @name";
                     cmd.Parameters.AddWithValue("@name", $"%{tagName}%");
                     SqlDataReader reader = cmd.ExecuteReader();
@@ -224,12 +226,15 @@ namespace TabloidCLI
                     SearchResults<Post> results = new SearchResults<Post>();
                     while (reader.Read())
                     {
+                        Author author = new Author();
+                        author.FirstName = reader.GetString(reader.GetOrdinal("AuthorName"));
                         Post post = new Post()
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
                             Title = reader.GetString(reader.GetOrdinal("Title")),
                             Url = reader.GetString(reader.GetOrdinal("Url")),
-                            PublishDateTime = reader.GetDateTime(reader.GetOrdinal("PublishDateTime"))
+                            PublishDateTime = reader.GetDateTime(reader.GetOrdinal("PublishDateTime")),
+                            Author = author
                         };
                         results.Add(post);
                     }
