@@ -105,11 +105,11 @@ namespace TabloidCLI.Repositories
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"INSERT INTO Note (Title,Text, Content,CreateDateTime,PostId )
-                                                     VALUES (@Title,Text, @Content,@DateTime,@PostId)";
+                    cmd.CommandText = @"INSERT INTO Note (Title, Content,CreateDateTime,PostId )
+                                                     VALUES (@Title, @Content,@DateTime,@PostId)";
                     cmd.Parameters.AddWithValue("@Title", note.Title);
-                    cmd.Parameters.AddWithValue("@Text", note.Text);
-                    cmd.Parameters.AddWithValue("@Content", note.Content);
+ 
+                    cmd.Parameters.AddWithValue("@Content", note.Text);
                     cmd.Parameters.AddWithValue("@DateTime", note.CreationDate);
                     cmd.Parameters.AddWithValue("@PostId", note.Post.Id);
 
