@@ -29,10 +29,8 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine("Note Menu");
             Console.WriteLine(" 1) List Notes");
             Console.WriteLine(" 2) Add Notes");
-            Console.WriteLine(" 3) Edit Notes");
-            Console.WriteLine(" 4) Remove Notes");
+            Console.WriteLine(" 3) Remove Notes");
             Console.WriteLine(" 0) Go Back");
-
             Console.Write("> ");
             string choice = Console.ReadLine();
             switch (choice)
@@ -41,22 +39,9 @@ namespace TabloidCLI.UserInterfaceManagers
                     List();
                     return this;
                 case "2":
-                    //Author author = Choose();
-                    //if (author == null)
-                    //{
-                    //    return this;
-                    //}
-                    //else
-                    //{
-                    //    return new AuthorDetailManager(this, _connectionString, author.Id);
-                    //}
-                case "3":
                     Add();
                     return this;
-                case "4":
-                    Edit();
-                    return this;
-                case "5":
+                case "3":
                     Remove();
                     return this;
                 case "0":
@@ -69,11 +54,11 @@ namespace TabloidCLI.UserInterfaceManagers
 
         private void List()
         {
-            List<Author> authors = _authorRepository.GetAll();
-            foreach (Author author in authors)
-            {
-                Console.WriteLine(author);
-            }
+            //List<Author> authors = _authorRepository.GetAll();
+            //foreach (Author author in authors)
+            //{
+            //    Console.WriteLine(author);
+            //}
         }
 
         //private Author Choose(string prompt = null)
@@ -124,36 +109,7 @@ namespace TabloidCLI.UserInterfaceManagers
             //_authorRepository.Insert(author);
         }
 
-        private void Edit()
-        {
-            //Author authorToEdit = Choose("Which author would you like to edit?");
-            //if (authorToEdit == null)
-            //{
-            //    return;
-            //}
-
-            //Console.WriteLine();
-            //Console.Write("New first name (blank to leave unchanged: ");
-            //string firstName = Console.ReadLine();
-            //if (!string.IsNullOrWhiteSpace(firstName))
-            //{
-            //    authorToEdit.FirstName = firstName;
-            //}
-            //Console.Write("New last name (blank to leave unchanged: ");
-            //string lastName = Console.ReadLine();
-            //if (!string.IsNullOrWhiteSpace(lastName))
-            //{
-            //    authorToEdit.LastName = lastName;
-            //}
-            //Console.Write("New bio (blank to leave unchanged: ");
-            //string bio = Console.ReadLine();
-            //if (!string.IsNullOrWhiteSpace(bio))
-            //{
-            //    authorToEdit.Bio = bio;
-            //}
-
-            //_authorRepository.Update(authorToEdit);
-        }
+       
 
         private void Remove()
         {
