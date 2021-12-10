@@ -7,6 +7,10 @@ namespace TabloidCLI.UserInterfaceManagers
 {
     internal class PostDetailManager : IUserInterfaceManager
     {
+
+        private const string CONNECTION_STRING =
+          @"Data Source=localhost\SQLEXPRESS;Database=TabloidCLI;Integrated Security=True";
+
         private IUserInterfaceManager _parentUI;
         private AuthorRepository _authorRepository;
         private PostRepository _postRepository;
@@ -46,9 +50,7 @@ namespace TabloidCLI.UserInterfaceManagers
                     RemoveTag();
                     return this;
                 case "4":
-                    //TODO
-                    //NoteMamagment
-                    return this;
+                    return new NoteManager(this, CONNECTION_STRING);
                 case "0":
                     return _parentUI;
                 default:
