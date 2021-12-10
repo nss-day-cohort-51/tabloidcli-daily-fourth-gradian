@@ -12,14 +12,14 @@ namespace TabloidCLI.UserInterfaceManagers
 
 
         private readonly IUserInterfaceManager _parentUI;
-        private AuthorRepository _authorRepository;
+        private PostRepository _postRepository;
         private string _connectionString;
         private NoteRepository _noteRepository;
 
         public NoteManager(IUserInterfaceManager parentUI, string connectionString)
         {
             _parentUI = parentUI;
-            _authorRepository = new AuthorRepository(connectionString);
+            _postRepository = new PostRepository(connectionString);
             _connectionString = connectionString;
             _noteRepository = new NoteRepository(connectionString);
         }
@@ -61,52 +61,54 @@ namespace TabloidCLI.UserInterfaceManagers
             //}
         }
 
-        //private Author Choose(string prompt = null)
-        //{
-        //    if (prompt == null)
-        //    {
-        //        prompt = "Please choose an Author:";
-        //    }
+        private Post ChoosePost(string prompt = null)
+        {
+            if (prompt == null)
+            {
+                prompt = "Please choose an Post:";
+            }
 
-        //    Console.WriteLine(prompt);
+            Console.WriteLine(prompt);
 
-        //    List<Author> authors = _authorRepository.GetAll();
+            List<Post> posts = _postRepository.GetAll();
 
-        //    for (int i = 0; i < authors.Count; i++)
-        //    {
-        //        Author author = authors[i];
-        //        Console.WriteLine($" {i + 1}) {author.FullName}");
-        //    }
-        //    Console.Write("> ");
+            for (int i = 0; i < posts.Count; i++)
+            {
+                Post post = posts[i];
+                Console.WriteLine($" {i + 1}) {post.Title}");
+            }
+            Console.Write("> ");
 
-        //    string input = Console.ReadLine();
-        //    try
-        //    {
-        //        int choice = int.Parse(input);
-        //        return authors[choice - 1];
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine("Invalid Selection");
-        //        return null;
-        //    }
-        //}
+            string input = Console.ReadLine();
+            try
+            {
+                int choice = int.Parse(input);
+                return posts[choice - 1];
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Invalid Selection");
+                return null;
+            }
+        }
 
         private void Add()
         {
-            //Console.WriteLine("New Author");
-            //Author author = new Author();
+            Console.WriteLine("New Note");
+            Note note = new Note();
 
-            //Console.Write("First Name: ");
-            //author.FirstName = Console.ReadLine();
+            Console.Write("Title: ");
+            note.Title = Console.ReadLine();
 
-            //Console.Write("Last Name: ");
-            //author.LastName = Console.ReadLine();
+            Console.Write("Text: ");
+            note.Text = Console.ReadLine();
 
-            //Console.Write("Bio: ");
-            //author.Bio = Console.ReadLine();
+            note.Post = ChoosePost("Post:");
 
-            //_authorRepository.Insert(author);
+            note.CreationDate = DateTime.Now;
+
+            _noteRepository.Insert(note);
+            
         }
 
 
