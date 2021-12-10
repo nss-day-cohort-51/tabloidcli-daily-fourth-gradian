@@ -12,14 +12,14 @@ namespace TabloidCLI.UserInterfaceManagers
        
 
         private readonly IUserInterfaceManager _parentUI;
-        private AuthorRepository _authorRepository;
+        private PostRepository _postRepository;
         private string _connectionString;
         private NoteRepository _noteRepository;
 
         public NoteManager(IUserInterfaceManager parentUI, string connectionString)
         {
             _parentUI = parentUI;
-            _authorRepository = new AuthorRepository(connectionString);
+            _postRepository = new PostRepository(connectionString);
             _connectionString = connectionString;
             _noteRepository = new NoteRepository(connectionString);
         }
@@ -54,28 +54,28 @@ namespace TabloidCLI.UserInterfaceManagers
 
         private void List()
         {
-            List<Note> notes = _noteRepository.GetAll();
-            foreach (Note note in notes)
-            {
-                Console.WriteLine(note);
-            }
+            //List<Author> authors = _authorRepository.GetAll();
+            //foreach (Author author in authors)
+            //{
+            //    Console.WriteLine(author);
+            //}
         }
 
-        private Note Choose(string prompt = null)
+        private Post ChoosePost(string prompt = null)
         {
             if (prompt == null)
             {
-                prompt = "Please choose an Note:";
+                prompt = "Please choose an Post:";
             }
 
             Console.WriteLine(prompt);
 
-            List<Note> notes = _noteRepository.GetAll();
+            List<Post> posts = _postRepository.GetAll();
 
-            for (int i = 0; i < notes.Count; i++)
+            for (int i = 0; i < posts.Count; i++)
             {
-                Note note = notes[i];
-                Console.WriteLine($" {i + 1}) {note.Title}");
+                Post post = posts[i];
+                Console.WriteLine($" {i + 1}) {post.Title}");
             }
             Console.Write("> ");
 
@@ -83,7 +83,7 @@ namespace TabloidCLI.UserInterfaceManagers
             try
             {
                 int choice = int.Parse(input);
-                return notes[choice - 1];
+                return posts[choice - 1];
             }
             catch (Exception ex)
             {
@@ -94,30 +94,32 @@ namespace TabloidCLI.UserInterfaceManagers
 
         private void Add()
         {
-            //Console.WriteLine("New Note");
-            //Author author = new Author();
+            Console.WriteLine("New Note");
+            Note note = new Note();
 
-            //Console.Write("First Name: ");
-            //author.FirstName = Console.ReadLine();
+            Console.Write("Title: ");
+            note.Title = Console.ReadLine();
 
-            //Console.Write("Last Name: ");
-            //author.LastName = Console.ReadLine();
+            Console.Write("Text: ");
+            note.Text = Console.ReadLine();
 
-            //Console.Write("Bio: ");
-            //author.Bio = Console.ReadLine();
+            note.Post = ChoosePost("Post:");
 
-            //_authorRepository.Insert(author);
+            note.CreationDate = DateTime.Now;
+
+            _noteRepository.Insert(note);
+            
         }
 
        
 
         private void Remove()
         {
-            Note noteToDelete = Choose("Which Note would you like to remove?");
-            if (noteToDelete != null)
-            {
-                _noteRepository.Delete(noteToDelete.Id);
-            }
+            //Note noteToDelete = Choose("Which Note would you like to remove?");
+            //if (noteToDelete != null)
+            //{
+            //    _noteRepository.Delete(noteToDelete.Id);
+            //}
         }
     }
 }

@@ -33,7 +33,7 @@ namespace TabloidCLI.Repositories
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
                             Title = reader.GetString(reader.GetOrdinal("Title")),
                             Content = reader.GetString(reader.GetOrdinal("Title")),
-                            CreationDate = reader.GetInt32(reader.GetOrdinal("CreateDatetime")),
+                            CreationDate = reader.GetDateTime((reader.GetOrdinal("CreateDatetime")))
                         };
                         notes.Add(note);
                     }
@@ -76,7 +76,7 @@ namespace TabloidCLI.Repositories
                                 Id = reader.GetInt32(reader.GetOrdinal("Id")),
                                 Title = reader.GetString(reader.GetOrdinal("Title")),
                                 Content = reader.GetString(reader.GetOrdinal("Content")),
-                                CreationDate = reader.GetInt32(reader.GetOrdinal("CreateDateTime")),
+                                CreationDate = reader.GetDateTime((reader.GetOrdinal("CreateDateTime")))
                             };
                         }
 
@@ -98,22 +98,25 @@ namespace TabloidCLI.Repositories
             }
         }
 
-        public void Insert(Note blog)
+        public void Insert(Note note)
         {
-            //using (SqlConnection conn = Connection)
-            //{
-            //    conn.Open();
-            //    using (SqlCommand cmd = conn.CreateCommand())
-            //    {
-            //        cmd.CommandText = @"INSERT INTO Note (Title, Url )
-            //                                         VALUES (@Title, @Url)";
-            //        cmd.Parameters.AddWithValue("@Title", blog.Title);
-            //        cmd.Parameters.AddWithValue("@Url", blog.Url);
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"INSERT INTO Note (Title,Text, Content,CreateDateTime,PostId )
+                                                     VALUES (@Title,Text, @Content,@DateTime,@PostId)";
+                    cmd.Parameters.AddWithValue("@Title", note.Title);
+                    cmd.Parameters.AddWithValue("@Text", note.Text);
+                    cmd.Parameters.AddWithValue("@Content", note.Content);
+                    cmd.Parameters.AddWithValue("@DateTime", note.CreationDate);
+                    cmd.Parameters.AddWithValue("@PostId", note.Post.Id);
 
 
-            //        cmd.ExecuteNonQuery();
-            //    }
-            //}
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
 
         public void Update(Note blog)
