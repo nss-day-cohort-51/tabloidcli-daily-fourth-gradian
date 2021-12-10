@@ -22,9 +22,9 @@ namespace TabloidCLI.UserInterfaceManagers
             _results.Add(result);
         }
 
-        public void Display()
+        public void Display(bool prompt = true)
         {
-            Console.WriteLine(Title);
+            if (prompt) Console.WriteLine(Title);
 
             foreach (T result in _results)
             {
